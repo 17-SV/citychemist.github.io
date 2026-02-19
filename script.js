@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateBusinessStatus() {
-    const now = new Date();
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
     const currentHour = now.getHours();
     const currentMinutes = now.getMinutes();
     const currentDay = now.getDay();
@@ -819,3 +819,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
