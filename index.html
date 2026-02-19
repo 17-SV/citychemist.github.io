@@ -310,7 +310,7 @@
           const period = h24 >= 12 ? "PM" : "AM";
           const hour = ((h24 + 11) % 12) + 1;
           if (precise) {
-            const now = new Date();
+            const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
             const minutes = now.getMinutes().toString().padStart(2, "0");
             return `${hour}:${minutes} ${period}`;
           }
@@ -858,3 +858,4 @@
 </body>
 
 </html>
+
