@@ -291,7 +291,7 @@
         };
         const baseHour = 9;
         const days = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
-        const diwaliDate = "10-20";   // MM-DD for Diwali
+        const diwaliDate = "11-08";   // MM-DD for Diwali
         const holiDate = "03-04";     // MM-DD for Holi
         const diwaliHours = { open: 9, close: 18 };
         // ---------- DOM ----------
@@ -527,7 +527,7 @@
 
         // ---------- INIT ----------
         updateChart(todayName);
-        setInterval(() => showCurrentHourInfo(selectedDayEl.textContent), 60 * 500);
+        setInterval(() => showCurrentHourInfo(selectedDayEl.textContent), 60 * 250);
       </script>
 
 
@@ -795,7 +795,8 @@
         <li><a href="updates.html" class="footer-links">Updates</a></li>
       </ul>
     </div>
-    <p class="footer-textc">© 2025 City Chemist. All rights reserved.</p>
+    <p class="footer-textc">© <span id="copyright-year"></span> City Chemist. All rights reserved.</p>
+    <script>document.getElementById('copyright-year').textContent = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getFullYear();</script>
   </footer>
   </div>
   <div class="footer-spacer"></div>
@@ -858,4 +859,3 @@
 </body>
 
 </html>
-
