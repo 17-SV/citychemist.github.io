@@ -1,105 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
- <link
-      rel="stylesheet"
-      data-purpose="Layout StyleSheet"
-      title="Web Awesome"
-      href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d"
-    >
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css"
-      >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome"
+    href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"
-      >
-    <title>Photos - City Chemist</title>
-    <link rel="icon" href="logoc.png" type="image/png">
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-<div id="loadercc">
-        <div class="logom">
-            <div class="c reed">C</div>
-            <div class="c blue">C</div>
-        </div>
-		<span class="loadercc"></span>
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+  <title>Photos - City Chemist</title>
+  <link rel="icon" href="logoc.png" type="image/png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="loadercc">
+    <div class="logom">
+      <div class="c reed">C</div>
+      <div class="c blue">C</div>
     </div>
-<script>
+    <span class="loadercc"></span>
+  </div>
+  <script>
     window.addEventListener("load", function () {
-        const loader = document.getElementById("loadercc");
-        loader.classList.add("fade-out"); // Triggers keyframe animation
+      const loader = document.getElementById("loadercc");
+      loader.classList.add("fade-out"); // Triggers keyframe animation
 
-        // Ensure loader is removed after animation ends
-        setTimeout(() => {
-            loader.style.display = "none";
-        }, 1000); // Match with the fade-out animation duration
+      // Ensure loader is removed after animation ends
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 1000); // Match with the fade-out animation duration
     });
-</script>
-    <div class="main-container">
-      <!-- Header -->
-      <div class="header">
-        <div class="header-left">
-  <button id="sidebar-toggle" class="sidebar-toggle">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
-  </button>
-</div>
-        <div class="header-center">
-          <a href="index.html"><img src="logo.png" alt="City Chemist Logo" class="header-logo" /></a>
-        </div>
-        <div class="header-right">
-          <!-- Theme toggle removed -->
-        </div>
+  </script>
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button id="sidebar-toggle" class="sidebar-toggle">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </button>
       </div>
+      <div class="header-center">
+        <a href="index.html"><img src="logo.png" alt="City Chemist Logo" class="header-logo" /></a>
+      </div>
+      <div class="header-right">
+        <!-- Theme toggle removed -->
+      </div>
+    </div>
 
-      <!-- Sidebar -->
-       <div id="sidebar" class="fixed-sidebar hidden">
-  <ul class="sidebar-list">
-    <li class="sidebar-item" data-link="/index.html">Home</li>
-    <li class="sidebar-item" data-link="/about.html">About</li>
-    <li class="sidebar-item" data-link="/FAQs.html">FAQs</li>
-    <li class="sidebar-item" data-link="/contact.html">Contact</li>
-    <li class="sidebar-item active" data-link="/photos.html">Photos</li>
-    <li class="sidebar-item " data-link="/updates.html">Updates ‎ ‎<i class="fa-solid fa-sparkles gradient-icon"></i></li>
-  </ul>
-</div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed-sidebar hidden">
+      <ul class="sidebar-list">
+        <li class="sidebar-item" data-link="/index.html">Home</li>
+        <li class="sidebar-item" data-link="/about.html">About</li>
+        <li class="sidebar-item" data-link="/FAQs.html">FAQs</li>
+        <li class="sidebar-item" data-link="/contact.html">Contact</li>
+        <li class="sidebar-item active" data-link="/photos.html">Photos</li>
+        <li class="sidebar-item " data-link="/updates.html">Updates ‎ ‎<i
+            class="fa-solid fa-sparkles gradient-icon"></i></li>
+      </ul>
+    </div>
 
     <div class="container1">
       <div>
         <div class="header1">
-                    </div>
-          <h2 class="section-title">View of The Place</h2>
-        
+        </div>
+        <h2 class="section-title">View of The Place</h2>
+
         <div class="filter-bar">
           <button class="filter-button active" data-filter="all">All</button>
           <button class="filter-button" data-filter="Exterior">Exterior</button>
@@ -149,7 +131,7 @@
           </div>
           <div class="gallery-item" data-category="Ground Floor">
             <div class="gallery-image" style="background-image: url('i14.jpg');"></div>
-          </div>  
+          </div>
           <div class="gallery-item" data-category="1st Floor">
             <div class="gallery-image" style="background-image: url('i15.jpg');"></div>
           </div>
@@ -162,7 +144,7 @@
           <div class="gallery-item" data-category="1st Floor">
             <div class="gallery-image" style="background-image: url('i18.jpg');"></div>
           </div>
-            <div class="gallery-item" data-category="Exterior">
+          <div class="gallery-item" data-category="Exterior">
             <div class="gallery-image" style="background-image: url('best.jpg');"></div>
           </div>
           <div class="gallery-item" data-category="Exterior">
@@ -180,50 +162,54 @@
           <div class="gallery-item" data-category="Exterior">
             <div class="gallery-image" style="background-image: url('o5.jpg');"></div>
           </div>
-      
-      <div><div class="footer-spacer"></div></div>
-    
-    <div class="fullscreen-carousel">
-  <div class="carousel-exit"><i class="fa-regular fa-angle-left"></i></div>
-  <div class="carousel-filters">
-    
-  <button class="carousel-filter active" data-filter="all">All</button>
-  <button class="carousel-filter" data-filter="Exterior">Exterior</button>
-  <button class="carousel-filter" data-filter="Ground Floor">Ground Floor</button>
-  <button class="carousel-filter" data-filter="1st Floor">1st Floor</button>
-</div>
-<button class="carousel-arrow carousel-prev">&#10094;</button>
-<button class="carousel-arrow carousel-next">&#10095;</button>
+
+          <div>
+            <div class="footer-spacer"></div>
+          </div>
+
+          <div class="fullscreen-carousel">
+            <div class="carousel-exit"><i class="fa-regular fa-angle-left"></i></div>
+            <div class="carousel-filters">
+
+              <button class="carousel-filter active" data-filter="all">All</button>
+              <button class="carousel-filter" data-filter="Exterior">Exterior</button>
+              <button class="carousel-filter" data-filter="Ground Floor">Ground Floor</button>
+              <button class="carousel-filter" data-filter="1st Floor">1st Floor</button>
+            </div>
+            <button class="carousel-arrow carousel-prev">&#10094;</button>
+            <button class="carousel-arrow carousel-next">&#10095;</button>
 
 
-  <div class="carousel-container">
-    <!-- Slides will be injected here by JS -->
-  </div>
-  
-  <div class="carousel-ui">
-    <span class="carousel-tag">Tag</span>
-    <span class="carousel-index">1 / 1</span>
-  </div>
-</div>
-</div>
+            <div class="carousel-container">
+              <!-- Slides will be injected here by JS -->
+            </div>
 
-
- <footer class="footer">       
-
-<img src="logoc.png" alt="City Chemist Logo" class="logocc">
-      <div class="footer-nav">
-  <ul class="footer-menu">
-    <li><a href="index.html" class="footer-links">Home</a></li>
-    <li><a href="about.html" class="footer-links">About Us</a></li>
-    <li><a href="contact.html" class="footer-links">Contact Us</a></li>
-    <li><a href="FAQs.html" class="footer-links">FAQs</a></li>
-  </ul>
-</div>
- <p class="footer-textc">© 2025 City Chemist. All rights reserved.</p>
-        </footer>
+            <div class="carousel-ui">
+              <span class="carousel-tag">Tag</span>
+              <span class="carousel-index">1 / 1</span>
+            </div>
+          </div>
         </div>
-<div class="footer-spacer"></div>
+
+
+        <footer class="footer">
+
+          <img src="logoc.png" alt="City Chemist Logo" class="logocc">
+          <div class="footer-nav">
+            <ul class="footer-menu">
+              <li><a href="index.html" class="footer-links">Home</a></li>
+              <li><a href="about.html" class="footer-links">About Us</a></li>
+              <li><a href="contact.html" class="footer-links">Contact Us</a></li>
+              <li><a href="FAQs.html" class="footer-links">FAQs</a></li>
+            </ul>
+          </div>
+          <p class="footer-textc">© <span id="copyright-year"></span> City Chemist. All rights reserved.</p>
+          <script>document.getElementById('copyright-year').textContent = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getFullYear();</script>
+        </footer>
+      </div>
+      <div class="footer-spacer"></div>
     </div>
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
