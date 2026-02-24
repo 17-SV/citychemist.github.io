@@ -1,201 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Redeploy trigger -->
 
+<head>
   <meta charset="UTF-8">
   <title>404 | City Chemist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="icon" href="logoc.png" type="image/png">
+
   <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
-}
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+      -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+      outline: none !important;
+    }
 
-*{
--webkit-tap-highlight-color:rgba(255,255,255,0) !important;
--webkit-focus-ring-color:rgba(255,255,255,0) !important;
-outline: none !important;
-}
-
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
     :root {
-      --primary: #2c9d7c;   /* brand teal/green */
-      --secondary: #4bbf9c; /* lighter green accent */
-      --text-dark: #222;
-      --text-light: #555;
-      --bg: #ffffff;
+      --primary: #2c9d7c;
+      --primary-dark: #1f7a5f;
+      --primary-light: #3bbf96;
+      --accent: #e8f5f0;
+      --bg: #fafbfc;
+      --card-bg: #ffffff;
+      --text-dark: #1a1f25;
+      --text-mid: #4a5568;
+      --text-light: #8896a6;
+      --border: #e8ecf1;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+      --radius: 16px;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--text-dark);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Animated background shapes ── */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-decor .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.45;
+      filter: blur(80px);
+      animation: float 14s ease-in-out infinite;
+    }
+
+    .bg-decor .shape:nth-child(1) {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(44, 157, 124, 0.22), transparent 70%);
+      top: -10%;
+      left: -8%;
+      animation-delay: 0s;
+    }
+
+    .bg-decor .shape:nth-child(2) {
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(59, 191, 150, 0.18), transparent 70%);
+      bottom: -12%;
+      right: -6%;
+      animation-delay: -5s;
+    }
+
+    .bg-decor .shape:nth-child(3) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(44, 157, 124, 0.12), transparent 70%);
+      top: 50%;
+      left: 60%;
+      animation-delay: -9s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -20px) scale(1.05);
+      }
+
+      66% {
+        transform: translate(-20px, 15px) scale(0.95);
+      }
+    }
+
+    /* ── Main content ── */
+    .error-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
 
-.btn {
-  text-decoration: none;
-  color: #101618;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 120px;
-  height: 44px;
-  padding: 0 20px;
-  border-radius: 9999px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  transition: all 0.25s ease;
-  text-decoration: none;
-}
-.btn-secondary {
-  color: #101618;
-  border: 1px solid #415348;
-  background: linear-gradient(145deg, #f3f6f5, #e4e9ec);
-  color: #111;
-  
-}
-.btn-secondary:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  border: 1px solid #1a8b7d;
-  color: #1a8b7d;
-  background: linear-gradient(145deg, #e4e9ec, #d8dee2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-}
-
-.btn-secondary:active {
-  border: 1px solid #1a8b7d;
-  color: #1a8b7d;
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05) inset;
-}
-    .container {
-      max-width: 600px;
-      padding: 2rem;
-    }
-
-    .logo {
-      width: 50px;
-      margin-bottom: 1rem;
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      margin: 0.2rem 0;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .txt{
-        
-        font-weight: 500;
-        font-size: small;
-    }
-
-    h2 {
-      font-size: 1.6rem;
-      margin: 0.5rem 0 1.2rem;
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-
-    p {
-      font-size: 1rem;
-      color: var(--text-light);
+    /* Logo */
+    .logo-link {
+      display: inline-block;
       margin-bottom: 2rem;
+      transition: transform 0.3s ease;
     }
 
-   .fa-info-circle{
-    color: #1a8b7d;
-   }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: #888;
+    .logo-link:hover {
+      transform: scale(1.05);
     }
 
-    /* subtle medical cross background */
-    body::before {
-      content: "+";
-      position: fixed;
-      font-size: 20rem;
-      color: rgba(44, 157, 124, 0.05);
-      top: 20%;
-      left: 10%;
+    .logo-img {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* 404 number */
+    .error-code {
+      font-size: 7rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -4px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      position: relative;
+      user-select: none;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ── Pharmacy cross watermarks ── */
+    .pharma-cross {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pharma-cross::before,
+    .pharma-cross::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(135deg, rgba(44, 157, 124, 0.10), rgba(59, 191, 150, 0.06));
+      border-radius: 6px;
+    }
+
+    /* vertical bar */
+    .pharma-cross::before {
+      width: 30%;
+      height: 100%;
+      left: 35%;
+      top: 0;
+    }
+
+    /* horizontal bar */
+    .pharma-cross::after {
+      width: 100%;
+      height: 30%;
+      top: 35%;
+      left: 0;
+    }
+
+    .pharma-cross-1 {
+      width: 180px;
+      height: 180px;
+      top: 6%;
+      right: 6%;
       transform: rotate(15deg);
-      z-index: -1;
+      animation: crossPulse 8s ease-in-out infinite;
+    }
+
+    .pharma-cross-2 {
+      width: 120px;
+      height: 120px;
+      bottom: 12%;
+      left: 5%;
+      transform: rotate(-10deg);
+      animation: crossPulse 8s ease-in-out infinite 3s;
+    }
+
+    .pharma-cross-3 {
+      width: 70px;
+      height: 70px;
+      top: 40%;
+      left: 12%;
+      transform: rotate(25deg);
+      animation: crossPulse 8s ease-in-out infinite 5s;
+    }
+
+    @keyframes crossPulse {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        transform: rotate(var(--rot, 15deg)) scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: rotate(var(--rot, 15deg)) scale(1.06);
+      }
+    }
+
+    .pharma-cross-1 {
+      --rot: 15deg;
+    }
+
+    .pharma-cross-2 {
+      --rot: -10deg;
+    }
+
+    .pharma-cross-3 {
+      --rot: 25deg;
+    }
+
+    .error-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+    }
+
+    .error-desc {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-mid);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 2rem;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+    }
+
+    /* ── Buttons ── */
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 140px;
+      height: 46px;
+      padding: 0 22px;
+      border-radius: 9999px;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(44, 157, 124, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44, 157, 124, 0.35);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(44, 157, 124, 0.2);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text-dark);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Quick links ── */
+    .quick-links {
+      margin-top: 2.5rem;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+    }
+
+    .quick-links-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .quick-links-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .quick-links-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .quick-links-list a:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .quick-links-list a i {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    /* ── Footer ── */
+    .error-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 1rem;
+      z-index: 1;
+    }
+
+    .error-footer p {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .error-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .error-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Animations ── */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .error-code {
+        font-size: 6rem;
+        letter-spacing: -3px;
+      }
+
+      .error-code::after {
+        font-size: 10rem;
+      }
+
+      .error-title {
+        font-size: 1.15rem;
+      }
+
+      .error-desc {
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .error-code {
+        font-size: 10rem;
+      }
+
+      .error-title {
+        font-size: 1.5rem;
+      }
     }
   </style>
-   <!-- ✅ FAVICON -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   <link
-      rel="stylesheet"
-      data-purpose="Layout StyleSheet"
-      title="Web Awesome"
-      href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d"
-    >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"
-      >
-   
-    <link rel="icon" href="log.png" type="image/png">
 </head>
+
 <body>
-  <div class="container">
-    
-    <img src="logoc.png" alt="City Chemist" class="logo">
+  <!-- Animated background -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <!-- Pharmacy crosses -->
+    <div class="pharma-cross pharma-cross-1"></div>
+    <div class="pharma-cross pharma-cross-2"></div>
+    <div class="pharma-cross pharma-cross-3"></div>
+  </div>
 
-    <h1>404</h1>
-    <h2>Page Not Found</h2>
-    <p class="txt"><i class="fa-solid fa-info-circle"></i> The page you’re trying to reach doesn’t exist or has been moved.  
+  <div class="error-wrapper">
+    <!-- Logo -->
+    <a href="/index" class="logo-link" aria-label="Back to City Chemist Home">
+      <img src="logoc.png" alt="City Chemist" class="logo-img">
+    </a>
+
+    <!-- 404 -->
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-desc">
+      <i class="fa-solid fa-circle-info"></i> The page you're looking for doesn't exist or has been moved.
+      Let's get you back on track.
     </p>
-<a style="text-decoration:none" href="/index.html" class="btn btn-secondary">Back to Home</a>
-</div>
-</body>
-</html>
 
+    <!-- Actions -->
+    <div class="actions">
+      <a href="/index" class="btn btn-primary">
+        <i class="fa-solid fa-house"></i> Back to Home
+      </a>
+      <a href="/contact" class="btn btn-secondary">
+        <i class="fa-solid fa-headset"></i> Contact Us
+      </a>
+    </div>
+
+    <!-- Quick links -->
+    <div class="quick-links">
+      <p class="quick-links-label">Quick Links</p>
+      <div class="quick-links-list">
+        <a href="/about"><i class="fa-solid fa-circle-info"></i> About</a>
+        <a href="/FAQs"><i class="fa-solid fa-circle-question"></i> FAQs</a>
+        <a href="/updates"><i class="fa-solid fa-newspaper"></i> Updates</a>
+        <a href="https://wa.me/+919719156959">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="tel:+919719156959"><i class="fa-solid fa-phone"></i> Call</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="error-footer">
+    <p>© <span id="copyright-year"></span> <a href="/index">City Chemist</a> | Dehradun's Trusted Pharmacy</p>
+  </div>
+
+  <script>
+    document.getElementById('copyright-year').textContent =
+      new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getFullYear();
+  </script>
+</body>
+
+</html>
