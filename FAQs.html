@@ -1,156 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tk0e2h1uL7vw70Z6jI5e0kODu6NO6W8j6W8zQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
- <link
-      rel="stylesheet"
-      data-purpose="Layout StyleSheet"
-      title="Web Awesome"
-      href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d"
-    >
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css"
-      >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tk0e2h1uL7vw70Z6jI5e0kODu6NO6W8j6W8zQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome"
+    href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
 
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"
-      >
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
 
 
-    <title>FAQs - City Chemist</title>
-    <link rel="icon" href="logoc.png" type="image/png">
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+  <title>FAQs | City Chemist</title>
+  <link rel="icon" href="logoc.png" type="image/png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-<div id="loadercc">
-        <div class="logom">
-            <div class="c reed">C</div>
-            <div class="c blue">C</div>
-        </div>
-		<span class="loadercc"></span>
+<body>
+
+  <div id="loadercc">
+    <div class="logom">
+      <div class="c reed">C</div>
+      <div class="c blue">C</div>
     </div>
-<script>
+    <span class="loadercc"></span>
+  </div>
+  <script>
     window.addEventListener("load", function () {
-        const loader = document.getElementById("loadercc");
-        loader.classList.add("fade-out"); // Triggers keyframe animation
+      const loader = document.getElementById("loadercc");
+      loader.classList.add("fade-out"); // Triggers keyframe animation
 
-        // Ensure loader is removed after animation ends
-        setTimeout(() => {
-            loader.style.display = "none";
-        }, 1000); // Match with the fade-out animation duration
+      // Ensure loader is removed after animation ends
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 1000); // Match with the fade-out animation duration
     });
-</script>
+  </script>
 
 
-    <div class="main-container">
-      <!-- Header -->
-      <div class="header">
-        <div class="header-left">
-  <button id="sidebar-toggle" class="sidebar-toggle">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
-  </button>
-</div>
-        <div class="header-center">
-          <a href="index.html"><img src="logo.png" alt="City Chemist Logo" class="header-logo" /></a>
-        </div>
-        <div class="header-right"></div>
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button id="sidebar-toggle" class="sidebar-toggle">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </button>
+      </div>
+      <div class="header-center">
+        <a href="/home"><img src="logo.png" alt="City Chemist Logo" class="header-logo" /></a>
+      </div>
+      <div class="header-right"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed-sidebar hidden">
+      <ul class="sidebar-list">
+        <li class="sidebar-item" data-link="/home">Home</li>
+        <li class="sidebar-item" data-link="/about">About</li>
+        <li class="sidebar-item active" data-link="/FAQs">FAQs</li>
+        <li class="sidebar-item" data-link="/contact">Contact</li>
+        <li class="sidebar-item" data-link="/photos">Photos</li>
+        <li class="sidebar-item " data-link="/updates">Updates ‎ ‎<i
+            class="fa-solid fa-sparkles gradient-icon"></i></li>
+      </ul>
+    </div>
+
+    <section class="faqs-section1">
+      <h2 class="section-title">Frequently Asked Questions </h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What are your operating hours?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">We are open Monday to Saturday from 9 am to 10 pm, and Sundays from 9 am to 2 pm.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Do you offer home delivery?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">No, We currently do not offer home delivery. Contact us for more details.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Do You Have Multiple Stores?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">We currently operate only one store. Any other outlet claiming to represent our brand is
+          not affiliated with us.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Do you offer discounts?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">Yes, we generally offer 10% off on almost all products (with a few exceptions).</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Do you provide GST bills?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">Yes, we provide GST bills for all eligible purchases.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is shop open on Sunday?<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">Yes, from 9 am to 2 pm.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">My question is not listed.<span class="faq-toggle">+</span></h3>
+        <p class="faq-answer">Contact us on +91 9719156959 for more queries.</p>
       </div>
 
-      <!-- Sidebar -->
-       <div id="sidebar" class="fixed-sidebar hidden">
-  <ul class="sidebar-list">
-    <li class="sidebar-item" data-link="/index.html">Home</li>
-    <li class="sidebar-item" data-link="/about.html">About</li>
-    <li class="sidebar-item active" data-link="/FAQs.html">FAQs</li>
-    <li class="sidebar-item" data-link="/contact.html">Contact</li>
-    <li class="sidebar-item" data-link="/photos.html">Photos</li>
-    <li class="sidebar-item " data-link="/updates.html">Updates ‎ ‎<i class="fa-solid fa-sparkles gradient-icon"></i></li>
-  </ul>
-</div>
+    </section>
+    <footer class="footer">
 
-<section class="faqs-section1">
-          <h2 class="section-title">Frequently Asked Questions  </h2>
-          <div class="faq-item">
-            <h3 class="faq-question">What are your operating hours?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">We are open Monday to Saturday from 9 am to 10 pm, and Sundays from 9 am to 2 pm.</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">Do you offer home delivery?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">No, We currently do not offer home delivery. Contact us for more details.</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">Do You Have Multiple Stores?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">We currently operate only one store. Any other outlet claiming to represent our brand is not affiliated with us.</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">Do you offer discounts?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">Yes, we generally offer 10% off on almost all products (with a few exceptions).</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">Do you provide GST bills?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">Yes, we provide GST bills for all eligible purchases.</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">Is shop open on Sunday?<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">Yes, from 9 am to 2 pm.</p>
-          </div>
-          <div class="faq-item">
-            <h3 class="faq-question">My question is not listed.<span class="faq-toggle">+</span></h3>
-            <p class="faq-answer">Contact us on +91 9719156959 for more queries.</p>
-          </div>
-
-        </section>
-<footer class="footer">       
-
-<img src="logoc.png" alt="City Chemist Logo" class="logocc">
+      <img src="logoc.png" alt="City Chemist Logo" class="logocc">
       <div class="footer-nav">
-  <ul class="footer-menu">
-    <li><a href="index.html" class="footer-links">Home</a></li>
-    <li><a href="about.html" class="footer-links">About Us</a></li>
-    <li><a href="contact.html" class="footer-links">Contact Us</a></li>
-    <li><a href="updates.html" class="footer-links">Updates</a></li>
-  </ul>
-</div>
- <p class="footer-textc">© 2025 City Chemist. All rights reserved.</p>
-        </footer>
-        </div>
-<div class="footer-spacer"></div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+        <ul class="footer-menu">
+          <li><a href="/home" class="footer-links">Home</a></li>
+          <li><a href="/about" class="footer-links">About Us</a></li>
+          <li><a href="/contact" class="footer-links">Contact Us</a></li>
+          <li><a href="/updates" class="footer-links">Updates</a></li>
+        </ul>
+      </div>
+      <p class="footer-textc">© <span id="copyright-year"></span> City Chemist | Dehradun's Trusted Pharmacy</p>
+      <script>document.getElementById('copyright-year').textContent = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getFullYear();</script>
+    </footer>
+  </div>
+  <div class="footer-spacer"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>
