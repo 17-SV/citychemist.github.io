@@ -979,6 +979,17 @@
   margin: 12px 0;
 }
 
+.update-imageholi {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  border: #bbd4cc 1px solid;
+  margin: 12px 0;
+}
+
 .aphoto-image {
   width: 100%;
   aspect-ratio: 1/1;
@@ -2549,6 +2560,18 @@
     width: 40%;
 
     aspect-ratio: 15/10;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    border: #bbd4cc 1px solid;
+    margin: 12px 0;
+  }
+
+  .update-imageholi {
+    width: 35%;
+
+    aspect-ratio: 1/1;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
