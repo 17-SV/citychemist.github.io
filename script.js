@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const diwaliHours = { open: 9, close: 18 };
 
   // 📅 Fixed Holidays (MM-DD)
-  const holidays = ['02-21']; //Holi
+  const holidays = ['03-04']; //Holi
 
   // =============================
   // 🕒 Date & Time Setup & Status Logic
@@ -825,7 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
         homeItemElement.appendChild(tomorrowNotice);
       }
       if (tomorrowNotice) {
-        tomorrowNotice.innerHTML = `<span class="tn-label"><i class="fa-solid fa-info-circle"></i></span> We will be closed tomorrow on the occasion of Holi.`;
+        tomorrowNotice.innerHTML = `<span class="tn-label"><i class="fa-solid fa-info-circle"></i></span> We will remain closed tomorrow on the occasion of Holi.`;
         tomorrowNotice.style.display = 'block';
       }
     } else {
