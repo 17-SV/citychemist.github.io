@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 
 <head>
   <meta charset="UTF-8" />
@@ -42,7 +42,20 @@
   },
   "url": "https://city-chemist.in",
   "telephone": "+919719156959",
-  "openingHours": "Mon-Sat 09:00-22:00, Sun 09:00-14:00",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "09:00",
+      "closes": "22:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.1",
@@ -81,14 +94,14 @@
     {
       "@type": "SiteNavigationElement",
       "position": 1,
-      "name": "About Us",
-      "url": "https://city-chemist.in/about"
+      "name": "Contact",
+      "url": "https://city-chemist.in/contact"
     },
     {
       "@type": "SiteNavigationElement",
       "position": 2,
-      "name": "Contact",
-      "url": "https://city-chemist.in/contact"
+      "name": "Updates",
+      "url": "https://city-chemist.in/updates"
     },
     {
       "@type": "SiteNavigationElement",
@@ -99,14 +112,14 @@
     {
       "@type": "SiteNavigationElement",
       "position": 4,
-      "name": "Photos",
-      "url": "https://city-chemist.in/photos"
-    }
-     {
+      "name": "About Us",
+      "url": "https://city-chemist.in/about"
+    },
+    {
       "@type": "SiteNavigationElement",
       "position": 5,
-      "name": "Updates",
-      "url": "https://city-chemist.in/updates"
+      "name": "Photos",
+      "url": "https://city-chemist.in/photos"
     }
   ]
 }
@@ -546,7 +559,7 @@
           <hr class="aboutus-divider">
 
           <p class="aboutus-text">
-            City Chemist is one of the largest pharmacy in Dehradun offering a wide selection of
+            City Chemist is one of the largest pharmacies in Dehradun offering a wide selection of
             branded medicines, orthotic products, baby care items, and everyday
             health essentials.
           </p>
