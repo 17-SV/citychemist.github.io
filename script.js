@@ -100,6 +100,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // 📅 Fixed Holidays (MM-DD)
   const holidays = ['03-04']; //Holi
 
+  // 📋 Special Info Days (YYYY-MM-DD — year-specific, not recurring)
+  const specialInfoDays = [
+    {
+      date: '2026-05-20',
+      title: 'Important Notice',
+      message: 'Today is a nationwide pharmacy strike. City Chemist will continue to operate for <strong>emergency & urgent medicines</strong> only. Regular services may be limited.',
+      icon: 'fa-solid fa-circle-info'
+    }
+  ];
+
   // =============================
   // 🕒 Date & Time Setup & Status Logic
   // =============================
@@ -128,6 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const tomorrow = new Date(now);
     tomorrow.setDate(now.getDate() + 1);
     const tomorrowDateString = getMMDD(tomorrow);
+
+    // 📋 Info day detection (year-specific)
+    const currentFullDateString = `${now.getFullYear()}-${currentDateString}`;
+    const activeInfoDay = specialInfoDays.find(d => d.date === currentFullDateString);
+    const isInfoDayToday = !!activeInfoDay;
 
     let todayHours;
     if (currentDateString === diwaliDate) {
@@ -563,6 +578,77 @@ document.addEventListener("DOMContentLoaded", function () {
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
+    /* ===== INFO DAY STYLES ===== */
+    .info-day-note {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(37, 99, 235, 0.03) 0%, transparent 50%),
+        linear-gradient(180deg, #f8faff 0%, #eef4ff 50%, #e8f0fe 100%);
+      border-radius: 14px;
+      padding: 22px 16px 16px;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(37, 99, 235, 0.08), inset 0 0 40px rgba(37, 99, 235, 0.03);
+      animation: holiFadeIn 0.5s ease-out;
+    }
+    /* Title */
+    .info-title {
+      position: relative;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #06b6d4 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+    /* Message */
+    .info-message {
+      position: relative;
+      font-size: 0.78rem;
+      color: #334155;
+      font-weight: 400;
+      line-height: 1.6;
+      padding: 0 24px;
+    }
+    .info-message strong {
+      color: #1e3a5f;
+      font-weight: 700;
+    }
+    /* Status badge */
+    .info-status-badge {
+      position: relative;
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 4px 14px;
+      border: 1px solid rgba(37,99,235,0.12);
+      border-radius: 20px;
+      background: rgba(37,99,235,0.04);
+    }
+    /* Faint green cross watermark */
+    .info-watermark-cross {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 120px;
+      height: 120px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+    }
+    .info-watermark-cross svg {
+      width: 100%;
+      height: 100%;
+    }
   `;
       document.head.appendChild(styleTag);
     }
@@ -797,15 +883,52 @@ document.addEventListener("DOMContentLoaded", function () {
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
 
+    } else if (isInfoDayToday && homeItemElement) {
+      // Info day card — informational overlay with normal business status
+      if (statusElement) statusElement.style.display = 'none';
+      if (timeInfoElement) timeInfoElement.style.display = 'none';
+      if (festiveNoteElement) festiveNoteElement.style.display = 'none';
+
+      let infoOverlay = document.getElementById('info-day-overlay');
+      if (!infoOverlay) {
+        infoOverlay = document.createElement('div');
+        infoOverlay.id = 'info-day-overlay';
+        homeItemElement.insertBefore(infoOverlay, businessHoursBox);
+      }
+
+      const infoStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+
+      infoOverlay.innerHTML = `
+        <div class="info-watermark-cross"><svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="5" width="20" height="60" rx="4" fill="#22c55e"/><rect x="5" y="25" width="60" height="20" rx="4" fill="#22c55e"/></svg></div>
+        <div class="info-title">${activeInfoDay.title}</div>
+        <div class="info-message">${activeInfoDay.message}</div>
+        <div class="info-status-badge" style="color:${infoStatusColor};">
+          ${statusMessage} ${statusIcon} <span style="color:#64748b;font-weight:500;font-size:0.79rem;">${timeInfoMessage}</span>
+        </div>
+      `;
+      infoOverlay.style.display = 'block';
+      homeItemElement.classList.add('info-day-note');
+      homeItemElement.classList.remove('holi-note');
+      homeItemElement.classList.remove('diwali-note');
+
+      // Hide other overlays
+      const holiOverlay = document.getElementById('holi-overlay');
+      if (holiOverlay) holiOverlay.style.display = 'none';
+      const diwaliOverlay = document.getElementById('diwali-overlay');
+      if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+
     } else {
       // Normal day — restore everything
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
       const diwaliOverlay = document.getElementById('diwali-overlay');
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+      const infoOverlay = document.getElementById('info-day-overlay');
+      if (infoOverlay) infoOverlay.style.display = 'none';
       if (homeItemElement) {
         homeItemElement.classList.remove('holi-note');
         homeItemElement.classList.remove('diwali-note');
+        homeItemElement.classList.remove('info-day-note');
       }
 
       if (festiveNoteElement) {
@@ -844,6 +967,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (homeItemElement) {
       if (isDiwaliToday) {
         homeItemElement.style.borderColor = '#ffb300';
+      } else if (isInfoDayToday) {
+        homeItemElement.style.borderColor = '#2563eb';
       } else if (isHolidayToday) {
         homeItemElement.style.borderColor = '#ff0000';
       } else {
