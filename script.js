@@ -97,6 +97,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const diwaliDate = '11-08'; //Diwali 
   const diwaliHours = { open: 9, close: 18 };
 
+  // 🪢 Raksha Bandhan half-day timing
+  const rakhiDate = '08-28';
+  const rakhiHours = { open: 9, close: 15 }; // closes at 3 PM
+
   // 📅 Fixed Holidays (MM-DD)
   const holidays = ['03-04']; //Holi
 
@@ -147,6 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let todayHours;
     if (currentDateString === diwaliDate) {
       todayHours = diwaliHours;
+    } else if (currentDateString === rakhiDate) {
+      todayHours = rakhiHours;
     } else if (currentDay === 0) {
       todayHours = sundayHours;
     } else {
@@ -156,6 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let tomorrowHours;
     if (tomorrowDateString === diwaliDate) {
       tomorrowHours = diwaliHours;
+    } else if (tomorrowDateString === rakhiDate) {
+      tomorrowHours = rakhiHours;
     } else if (currentDay === 6) {
       tomorrowHours = sundayHours;
     } else {
@@ -164,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const isHolidayToday = holidays.includes(currentDateString);
     const isDiwaliToday = currentDateString === diwaliDate;
+    const isRakhiToday = currentDateString === rakhiDate;
     const isHolidayTomorrow = holidays.includes(tomorrowDateString);
 
     // Find next open day (skipping holidays)
@@ -180,6 +189,8 @@ document.addEventListener("DOMContentLoaded", function () {
         daysAhead = i;
         if (checkDateStr === diwaliDate) {
           nextOpenHours = diwaliHours;
+        } else if (checkDateStr === rakhiDate) {
+          nextOpenHours = rakhiHours;
         } else if (checkDate.getDay() === 0) {
           nextOpenHours = sundayHours;
         } else {
@@ -649,6 +660,161 @@ document.addEventListener("DOMContentLoaded", function () {
       width: 100%;
       height: 100%;
     }
+
+    /* ===== RAKSHA BANDHAN STYLES ===== */
+    .rakhi-note {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(255, 138, 101, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(233, 30, 99, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at center, #ffffff 30%, #fffaf5 55%, #fff5ec 75%, #ffefe0 100%);
+      border-radius: 14px;
+      padding: 20px 16px 16px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(200, 100, 50, 0.08), inset 0 0 30px rgba(255, 160, 80, 0.04);
+      animation: holiFadeIn 0.5s ease-out;
+    }
+
+    /* Decorative thread lines on sides */
+    .rakhi-thread-left, .rakhi-thread-right {
+      position: absolute;
+      top: 0;
+      width: 12px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .rakhi-thread-left  { left: 3px; }
+    .rakhi-thread-right { right: 3px; }
+    .rakhi-thread-left::after, .rakhi-thread-right::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 12px;
+      left: 0;
+    }
+    .rakhi-thread-left::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='20'%3E%3Cpath d='M4 0 Q8 5, 4 10 Q0 15, 4 20' fill='none' stroke='%23c9382a' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M8 0 Q4 5, 8 10 Q12 15, 8 20' fill='none' stroke='%23e8a040' stroke-width='0.6' opacity='0.35'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-size: 12px 20px;
+    }
+    .rakhi-thread-right::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='20'%3E%3Cpath d='M8 0 Q4 5, 8 10 Q12 15, 8 20' fill='none' stroke='%23c9382a' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M4 0 Q8 5, 4 10 Q0 15, 4 20' fill='none' stroke='%23e8a040' stroke-width='0.6' opacity='0.35'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-size: 12px 20px;
+    }
+
+    /* Small decorative beads on threads */
+    .rakhi-bead {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      box-shadow: 0 0 3px 1px rgba(255, 160, 80, 0.3);
+    }
+    .rakhi-bead.b1 { background: #e8a040; top: 15%; left: 6px; }
+    .rakhi-bead.b2 { background: #c9382a; top: 45%; left: 7px; }
+    .rakhi-bead.b3 { background: #e8a040; top: 75%; left: 6px; }
+    .rakhi-bead.b4 { background: #c9382a; top: 15%; right: 6px; }
+    .rakhi-bead.b5 { background: #e8a040; top: 45%; right: 7px; }
+    .rakhi-bead.b6 { background: #c9382a; top: 75%; right: 6px; }
+
+    /* SVG Rakhi motif */
+    .rakhi-motif {
+      position: relative;
+      width: 56px;
+      height: 28px;
+      flex-shrink: 0;
+      margin: 0 auto 6px;
+    }
+    .rakhi-motif svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 1px 3px rgba(180, 60, 30, 0.2));
+    }
+    @keyframes rakhiShimmer {
+      0%   { opacity: 0.4; }
+      50%  { opacity: 0.8; }
+      100% { opacity: 0.4; }
+    }
+    .rakhi-motif .rakhi-shimmer {
+      animation: rakhiShimmer 2s ease-in-out infinite;
+    }
+
+    .rakhi-title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .rakhi-title {
+      position: relative;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      background: linear-gradient(
+        90deg,
+        #c9382a 0%,
+        #d94f3a 20%,
+        #e8a040 40%,
+        #d94f3a 60%,
+        #c9382a 80%,
+        #b52a1c 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+    }
+    .rakhi-subtitle {
+      position: relative;
+      font-size: 0.78rem;
+      color: #555;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .rakhi-timing {
+      position: relative;
+      display: inline-block;
+      font-size: 0.73rem;
+      color: #c9382a;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border: 1px solid rgba(201, 56, 42, 0.18);
+      border-radius: 20px;
+      background: rgba(201, 56, 42, 0.05);
+    }
+    .rakhi-bg-effect {
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(201, 56, 42, 0.025) 0%, transparent 25%),
+        radial-gradient(circle at 90% 85%, rgba(232, 160, 64, 0.025) 0%, transparent 25%),
+        radial-gradient(circle at 50% 5%, rgba(255, 138, 101, 0.02) 0%, transparent 30%);
+      background-attachment: fixed;
+    }
+    /* Faint rakhi watermark */
+    .rakhi-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.04;
+    }
+    .rakhi-watermark svg {
+      width: 100%;
+      height: 100%;
+    }
   `;
       document.head.appendChild(styleTag);
     }
@@ -674,6 +840,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       document.body.classList.add('holi-bg-effect');
       document.body.classList.remove('diwali-bg-effect');
+      document.body.classList.remove('rakhi-bg-effect');
 
     } else if (isDiwaliToday) {
       festiveNote = 'diwali';
@@ -690,17 +857,62 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       document.body.classList.add('diwali-bg-effect');
       document.body.classList.remove('holi-bg-effect');
+      document.body.classList.remove('rakhi-bg-effect');
 
-      if (currentHour >= todayHours.open && currentHour < todayHours.close) {
-        statusMessage = 'Open now';
-        timeInfoMessage = `Open until ${formatTime(todayHours.close)}.`;
-        statusClass = 'open';
-        statusIcon = '<div class="static-circle green beeping"></div>';
-      } else if (opensSoon) {
+      if (opensSoon) {
         statusMessage = 'Opens soon';
         timeInfoMessage = `Opens at ${formatTime(todayHours.open)}.`;
         statusClass = 'soon';
         statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (closesSoon) {
+        statusMessage = 'Closes soon';
+        timeInfoMessage = `Closes at ${formatTime(todayHours.close)}.`;
+        statusClass = 'soon';
+        statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (currentHour >= todayHours.open && currentHour < todayHours.close) {
+        statusMessage = 'Open now';
+        timeInfoMessage = `Open until ${formatTime(todayHours.close)}.`;
+        statusClass = 'open';
+        statusIcon = '<div class="static-circle green beeping"></div>';
+      } else {
+        statusMessage = 'Closed now';
+        timeInfoMessage = getNextOpenText();
+        statusClass = 'closed';
+        statusIcon = '<div class="static-circle red"></div>';
+      }
+
+    } else if (isRakhiToday) {
+      festiveNote = 'rakhi';
+
+      if (festiveNoteElement) {
+        festiveNoteElement.style.background = 'none';
+        festiveNoteElement.style.backgroundSize = '';
+        festiveNoteElement.style.boxShadow = 'none';
+        festiveNoteElement.style.border = 'none';
+        festiveNoteElement.style.animation = 'none';
+        festiveNoteElement.style.padding = '0';
+        festiveNoteElement.style.color = '';
+        festiveNoteElement.style.textShadow = '';
+      }
+      document.body.classList.add('rakhi-bg-effect');
+      document.body.classList.remove('holi-bg-effect');
+      document.body.classList.remove('diwali-bg-effect');
+
+      if (opensSoon) {
+        statusMessage = 'Opens soon';
+        timeInfoMessage = `Opens at ${formatTime(todayHours.open)}.`;
+        statusClass = 'soon';
+        statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (closesSoon) {
+        statusMessage = 'Closes soon';
+        timeInfoMessage = `Closes at ${formatTime(todayHours.close)}.`;
+        statusClass = 'soon';
+        statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (currentHour >= todayHours.open && currentHour < todayHours.close) {
+        statusMessage = 'Open now';
+        timeInfoMessage = `Open until ${formatTime(todayHours.close)}.`;
+        statusClass = 'open';
+        statusIcon = '<div class="static-circle green beeping"></div>';
       } else {
         statusMessage = 'Closed now';
         timeInfoMessage = getNextOpenText();
@@ -711,6 +923,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       document.body.classList.remove('holi-bg-effect');
       document.body.classList.remove('diwali-bg-effect');
+      document.body.classList.remove('rakhi-bg-effect');
 
       if (festiveNoteElement) {
         festiveNoteElement.style.background = 'linear-gradient(90deg, #ffda8a, #ffd35c, #ffda8a)';
@@ -883,6 +1096,103 @@ document.addEventListener("DOMContentLoaded", function () {
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
 
+      // Hide rakhi overlay if present
+      const rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (rakhiOverlay) rakhiOverlay.style.display = 'none';
+
+    } else if (isRakhiToday && homeItemElement) {
+      // Raksha Bandhan card — half day with festive overlay
+      if (statusElement) statusElement.style.display = 'none';
+      if (timeInfoElement) timeInfoElement.style.display = 'none';
+      if (festiveNoteElement) festiveNoteElement.style.display = 'none';
+
+      let rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (!rakhiOverlay) {
+        rakhiOverlay = document.createElement('div');
+        rakhiOverlay.id = 'rakhi-overlay';
+        homeItemElement.insertBefore(rakhiOverlay, businessHoursBox);
+      }
+
+      const rakhiStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+
+      rakhiOverlay.innerHTML = `
+        <div class="rakhi-thread-left"></div>
+        <div class="rakhi-thread-right"></div>
+        <div class="rakhi-bead b1"></div>
+        <div class="rakhi-bead b2"></div>
+        <div class="rakhi-bead b3"></div>
+        <div class="rakhi-bead b4"></div>
+        <div class="rakhi-bead b5"></div>
+        <div class="rakhi-bead b6"></div>
+        <div class="rakhi-watermark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="#c9382a" stroke-width="2"/><circle cx="50" cy="50" r="35" fill="none" stroke="#e8a040" stroke-width="1.5"/><circle cx="50" cy="50" r="25" fill="none" stroke="#c9382a" stroke-width="1"/><circle cx="50" cy="50" r="12" fill="#c9382a" opacity="0.3"/></svg></div>
+        <div class="rakhi-motif">
+          <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="rakhiCenterG" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff3e0"/>
+                <stop offset="30%" stop-color="#ffcc80"/>
+                <stop offset="60%" stop-color="#e8a040"/>
+                <stop offset="100%" stop-color="#c9382a"/>
+              </radialGradient>
+              <radialGradient id="rakhiGemG" cx="40%" cy="35%" r="55%">
+                <stop offset="0%" stop-color="#ff6f61"/>
+                <stop offset="50%" stop-color="#c9382a"/>
+                <stop offset="100%" stop-color="#8b1a1a"/>
+              </radialGradient>
+              <filter id="rakhiGlow">
+                <feGaussianBlur stdDeviation="1" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Left thread -->
+            <path d="M0 18 Q8 15, 14 18 Q18 21, 22 18 Q25 15, 28 18" fill="none" stroke="#c9382a" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M0 18 Q8 21, 14 18 Q18 15, 22 18 Q25 21, 28 18" fill="none" stroke="#e8a040" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+            <!-- Left beads -->
+            <circle cx="10" cy="18" r="2" fill="#e8a040" stroke="#c9382a" stroke-width="0.3"/>
+            <circle cx="20" cy="18" r="1.8" fill="#c9382a" stroke="#e8a040" stroke-width="0.3"/>
+            <!-- Central rakhi medallion -->
+            <circle cx="45" cy="18" r="12" fill="url(#rakhiCenterG)" stroke="#b8860b" stroke-width="0.5"/>
+            <circle cx="45" cy="18" r="9.5" fill="none" stroke="#e8a040" stroke-width="0.8" stroke-dasharray="2 1.5"/>
+            <circle cx="45" cy="18" r="7" fill="none" stroke="#c9382a" stroke-width="0.5"/>
+            <!-- Gem center -->
+            <circle cx="45" cy="18" r="5" fill="url(#rakhiGemG)" filter="url(#rakhiGlow)"/>
+            <!-- Gem highlight -->
+            <ellipse cx="43.5" cy="16.5" rx="2" ry="1.5" fill="rgba(255,255,255,0.3)"/>
+            <!-- Shimmer sparkle -->
+            <circle class="rakhi-shimmer" cx="48" cy="14" r="0.8" fill="#fff8e1"/>
+            <!-- Decorative petals around gem -->
+            <circle cx="45" cy="10.5" r="1" fill="#e8a040" opacity="0.6"/>
+            <circle cx="45" cy="25.5" r="1" fill="#e8a040" opacity="0.6"/>
+            <circle cx="38.5" cy="14" r="1" fill="#e8a040" opacity="0.6"/>
+            <circle cx="51.5" cy="14" r="1" fill="#e8a040" opacity="0.6"/>
+            <circle cx="38.5" cy="22" r="1" fill="#e8a040" opacity="0.6"/>
+            <circle cx="51.5" cy="22" r="1" fill="#e8a040" opacity="0.6"/>
+            <!-- Right beads -->
+            <circle cx="70" cy="18" r="1.8" fill="#c9382a" stroke="#e8a040" stroke-width="0.3"/>
+            <circle cx="80" cy="18" r="2" fill="#e8a040" stroke="#c9382a" stroke-width="0.3"/>
+            <!-- Right thread -->
+            <path d="M62 18 Q65 15, 68 18 Q72 21, 76 18 Q82 15, 90 18" fill="none" stroke="#c9382a" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M62 18 Q65 21, 68 18 Q72 15, 76 18 Q82 21, 90 18" fill="none" stroke="#e8a040" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="rakhi-title">Happy Raksha Bandhan!</div>
+        <div class="rakhi-subtitle">We're operating on <strong>reduced hours</strong> today.</div>
+        <div class="rakhi-timing">Raksha Bandhan Hours: ${formatTime(rakhiHours.open)} – ${formatTime(rakhiHours.close)}</div>
+        <div style="position:relative; font-size:0.95rem; color:${rakhiStatusColor}; font-weight:600; margin-top:12px; margin-bottom:7px;">
+           ${statusMessage} ${statusIcon} <span style="color:#888; font-weight:500;font-size:0.91rem;">${timeInfoMessage}</span>
+        </div>
+      `;
+      rakhiOverlay.style.display = 'block';
+      homeItemElement.classList.add('rakhi-note');
+      homeItemElement.classList.remove('holi-note');
+      homeItemElement.classList.remove('diwali-note');
+
+      // Hide other overlays
+      const holiOverlay = document.getElementById('holi-overlay');
+      if (holiOverlay) holiOverlay.style.display = 'none';
+      const diwaliOverlay = document.getElementById('diwali-overlay');
+      if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+
     } else if (isInfoDayToday && homeItemElement) {
       // Info day card — informational overlay with normal business status
       if (statusElement) statusElement.style.display = 'none';
@@ -910,12 +1220,15 @@ document.addEventListener("DOMContentLoaded", function () {
       homeItemElement.classList.add('info-day-note');
       homeItemElement.classList.remove('holi-note');
       homeItemElement.classList.remove('diwali-note');
+      homeItemElement.classList.remove('rakhi-note');
 
       // Hide other overlays
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
       const diwaliOverlay = document.getElementById('diwali-overlay');
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+      const rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (rakhiOverlay) rakhiOverlay.style.display = 'none';
 
     } else {
       // Normal day — restore everything
@@ -925,10 +1238,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
       const infoOverlay = document.getElementById('info-day-overlay');
       if (infoOverlay) infoOverlay.style.display = 'none';
+      const rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (rakhiOverlay) rakhiOverlay.style.display = 'none';
       if (homeItemElement) {
         homeItemElement.classList.remove('holi-note');
         homeItemElement.classList.remove('diwali-note');
         homeItemElement.classList.remove('info-day-note');
+        homeItemElement.classList.remove('rakhi-note');
       }
 
       if (festiveNoteElement) {
@@ -967,6 +1283,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (homeItemElement) {
       if (isDiwaliToday) {
         homeItemElement.style.borderColor = '#ffb300';
+      } else if (isRakhiToday) {
+        homeItemElement.style.borderColor = '#e65100';
       } else if (isInfoDayToday) {
         homeItemElement.style.borderColor = '#2563eb';
       } else if (isHolidayToday) {
