@@ -302,7 +302,9 @@
         const days = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
         const diwaliDate = "11-08";   // MM-DD for Diwali
         const holiDate = "03-04";     // MM-DD for Holi
+        const rakhiDate = "08-28";    // MM-DD for Raksha Bandhan
         const diwaliHours = { open: 9, close: 18 };
+        const rakhiHours = { open: 9, close: 15 };
         // ---------- DOM ----------
         const chartEl = document.querySelector(".chart");
         const bars = chartEl.querySelectorAll(".bar");
@@ -364,6 +366,16 @@
           const now = new Date();
           return isDiwali() && now.getHours() >= diwaliHours.open && now.getHours() < diwaliHours.close;
         }
+        function isRakhi() {
+          const now = new Date();
+          const mm = String(now.getMonth() + 1).padStart(2, '0');
+          const dd = String(now.getDate()).padStart(2, '0');
+          return `${mm}-${dd}` === rakhiDate;
+        }
+        function isRakhiOpen() {
+          const now = new Date();
+          return isRakhi() && now.getHours() >= rakhiHours.open && now.getHours() < rakhiHours.close;
+        }
         // ---------- SHOW INFO ----------
         function showBarInfo(bar, hour, value, precise = false) {
           if (isHoli()) {
@@ -374,6 +386,12 @@
 
           // Diwali after closing hour: hide info
           if (isDiwali() && hour >= diwaliHours.close) {
+            barInfo.style.opacity = 0;
+            lineIndicator.style.display = "none";
+            return;
+          }
+          // Raksha Bandhan after closing hour: hide info
+          if (isRakhi() && hour >= rakhiHours.close) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
@@ -463,6 +481,12 @@
 
           // Diwali: hide info after 6 PM
           if (isDiwali() && currentHour >= diwaliHours.close) {
+            barInfo.style.opacity = 0;
+            lineIndicator.style.display = "none";
+            return;
+          }
+          // Raksha Bandhan: hide info after 3 PM
+          if (isRakhi() && currentHour >= rakhiHours.close) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
