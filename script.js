@@ -1497,4 +1497,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-});
+}); //Update
