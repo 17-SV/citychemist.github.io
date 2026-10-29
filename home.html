@@ -305,6 +305,8 @@
         const rakhiDate = "08-28";    // MM-DD for Raksha Bandhan
         const diwaliHours = { open: 9, close: 18 };
         const rakhiHours = { open: 9, close: 15 };
+        const karwachauthDate = "10-29";  // MM-DD for Karwa Chauth
+        const karwachauthHours = { open: 9, close: 20 };
         // ---------- DOM ----------
         const chartEl = document.querySelector(".chart");
         const bars = chartEl.querySelectorAll(".bar");
@@ -376,6 +378,16 @@
           const now = new Date();
           return isRakhi() && now.getHours() >= rakhiHours.open && now.getHours() < rakhiHours.close;
         }
+        function isKarwachauth() {
+          const now = new Date();
+          const mm = String(now.getMonth() + 1).padStart(2, '0');
+          const dd = String(now.getDate()).padStart(2, '0');
+          return `${mm}-${dd}` === karwachauthDate;
+        }
+        function isKarwachauthOpen() {
+          const now = new Date();
+          return isKarwachauth() && now.getHours() >= karwachauthHours.open && now.getHours() < karwachauthHours.close;
+        }
         // ---------- SHOW INFO ----------
         function showBarInfo(bar, hour, value, precise = false) {
           if (isHoli()) {
@@ -392,6 +404,12 @@
           }
           // Raksha Bandhan after closing hour: hide info
           if (isRakhi() && hour >= rakhiHours.close) {
+            barInfo.style.opacity = 0;
+            lineIndicator.style.display = "none";
+            return;
+          }
+          // Karwa Chauth after closing hour: hide info
+          if (isKarwachauth() && hour >= karwachauthHours.close) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
@@ -437,10 +455,26 @@
         // ---------- CHART UPDATE ----------
         function updateChart(day) {
           const values = dataByDay[day];
+          const todayIndex = new Date().getDay();
+          const todayName = days[todayIndex];
+          const isToday = day === todayName;
 
           bars.forEach((bar, i) => {
             const hour = baseHour + i;
-            const val = values[i] ?? 0;
+            let val = values[i] ?? 0;
+
+            // On special festival days, zero out bars after closing hour so chart reflects business hours
+            if (isToday) {
+              if (isHoli()) {
+                val = 0;
+              } else if (isDiwali() && hour >= diwaliHours.close) {
+                val = 0;
+              } else if (isRakhi() && hour >= rakhiHours.close) {
+                val = 0;
+              } else if (isKarwachauth() && hour >= karwachauthHours.close) {
+                val = 0;
+              }
+            }
 
             bar.style.height = val + "%";
             bar.dataset.value = val;
@@ -459,9 +493,7 @@
           lineIndicator.style.display = "none";
 
           // ✅ Highlight current hour only if this is today
-          const todayIndex = new Date().getDay();
-          const todayName = days[todayIndex];
-          if (day === todayName) {
+          if (isToday) {
             showCurrentHourInfo(day);
           }
         }
@@ -487,6 +519,12 @@
           }
           // Raksha Bandhan: hide info after 3 PM
           if (isRakhi() && currentHour >= rakhiHours.close) {
+            barInfo.style.opacity = 0;
+            lineIndicator.style.display = "none";
+            return;
+          }
+          // Karwa Chauth: hide info after 8 PM
+          if (isKarwachauth() && currentHour >= karwachauthHours.close) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
@@ -898,4 +936,4 @@
 
 </body>
 
-</html> <!-- Update -->
+</html>
