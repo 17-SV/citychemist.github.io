@@ -101,6 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const rakhiDate = '08-28';
   const rakhiHours = { open: 9, close: 15 }; // closes at 3 PM
 
+  // ðŸŒ™ Karwa Chauth timing
+  const karwachauthDate = '10-29';
+  const karwachauthHours = { open: 9, close: 20 }; // closes at 8 PM
+
   // 📅 Fixed Holidays (MM-DD)
   const holidays = ['03-04']; //Holi
 
@@ -153,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
       todayHours = diwaliHours;
     } else if (currentDateString === rakhiDate) {
       todayHours = rakhiHours;
+    } else if (currentDateString === karwachauthDate) {
+      todayHours = karwachauthHours;
     } else if (currentDay === 0) {
       todayHours = sundayHours;
     } else {
@@ -164,6 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
       tomorrowHours = diwaliHours;
     } else if (tomorrowDateString === rakhiDate) {
       tomorrowHours = rakhiHours;
+    } else if (tomorrowDateString === karwachauthDate) {
+      tomorrowHours = karwachauthHours;
     } else if (currentDay === 6) {
       tomorrowHours = sundayHours;
     } else {
@@ -173,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const isHolidayToday = holidays.includes(currentDateString);
     const isDiwaliToday = currentDateString === diwaliDate;
     const isRakhiToday = currentDateString === rakhiDate;
+    const isKarwachauthToday = currentDateString === karwachauthDate;
     const isHolidayTomorrow = holidays.includes(tomorrowDateString);
 
     // Find next open day (skipping holidays)
@@ -191,6 +200,8 @@ document.addEventListener("DOMContentLoaded", function () {
           nextOpenHours = diwaliHours;
         } else if (checkDateStr === rakhiDate) {
           nextOpenHours = rakhiHours;
+        } else if (checkDateStr === karwachauthDate) {
+          nextOpenHours = karwachauthHours;
         } else if (checkDate.getDay() === 0) {
           nextOpenHours = sundayHours;
         } else {
@@ -815,7 +826,134 @@ document.addEventListener("DOMContentLoaded", function () {
       width: 100%;
       height: 100%;
     }
-  `;
+  
+    /* ===== KARWA CHAUTH STYLES ===== */
+    .kc-note {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #ffffff 35%, #fffaf6 60%, #fff3ec 85%, #ffebe3 100%);
+      border-radius: 14px;
+      padding: 20px 16px 16px;
+      text-align: center;
+      box-shadow: 0 2px 14px rgba(183, 28, 28, 0.08), inset 0 0 30px rgba(255, 171, 145, 0.06);
+      animation: holiFadeIn 0.5s ease-out;
+    }
+
+    /* Side decorative festive threads */
+    .kc-thread-left, .kc-thread-right {
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .kc-thread-left  { left: 4px; }
+    .kc-thread-right { right: 4px; }
+    .kc-thread-left::after, .kc-thread-right::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 10px;
+      left: 0;
+    }
+    .kc-thread-left::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='22'%3E%3Cpath d='M5 0 L8 5.5 L2 11 L8 16.5 L5 22' fill='none' stroke='%23b71c1c' stroke-width='0.75' opacity='0.35'/%3E%3Cpath d='M5 0 L3 5.5 L7 11 L3 16.5 L5 22' fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.4'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-size: 10px 22px;
+    }
+    .kc-thread-right::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='22'%3E%3Cpath d='M5 0 L2 5.5 L8 11 L2 16.5 L5 22' fill='none' stroke='%23b71c1c' stroke-width='0.75' opacity='0.35'/%3E%3Cpath d='M5 0 L7 5.5 L3 11 L7 16.5 L5 22' fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.4'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-size: 10px 22px;
+    }
+
+    /* Small decorative beads */
+    .kc-bead {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .kc-bead.b1 { background: #d4af37; top: 15%; left: 7px; box-shadow: 0 0 3px 1px rgba(212, 175, 55, 0.5); }
+    .kc-bead.b2 { background: #b71c1c; top: 50%; left: 7px; box-shadow: 0 0 3px 1px rgba(183, 28, 28, 0.4); }
+    .kc-bead.b3 { background: #d4af37; top: 85%; left: 7px; box-shadow: 0 0 3px 1px rgba(212, 175, 55, 0.5); }
+    .kc-bead.b4 { background: #d4af37; top: 15%; right: 7px; box-shadow: 0 0 3px 1px rgba(212, 175, 55, 0.5); }
+    .kc-bead.b5 { background: #b71c1c; top: 50%; right: 7px; box-shadow: 0 0 3px 1px rgba(183, 28, 28, 0.4); }
+    .kc-bead.b6 { background: #d4af37; top: 85%; right: 7px; box-shadow: 0 0 3px 1px rgba(212, 175, 55, 0.5); }
+
+    .kc-title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-bottom: 6px;
+    }
+    .mini-kc {
+      position: relative;
+      width: 40px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .mini-kc svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 1px 2px rgba(183, 28, 28, 0.25));
+    }
+    .mini-kc .diya-flame-g {
+      animation: diyaFlicker 0.4s infinite alternate ease-in-out;
+      transform-origin: 29px 7px;
+    }
+    .kc-title {
+      position: relative;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      background: linear-gradient(
+        90deg,
+        #b71c1c 0%,
+        #d32f2f 25%,
+        #e5a93c 50%,
+        #d32f2f 75%,
+        #b71c1c 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+    }
+    .kc-subtitle {
+      position: relative;
+      font-size: 0.78rem;
+      color: #555;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .kc-timing {
+      position: relative;
+      display: inline-block;
+      font-size: 0.73rem;
+      color: #b71c1c;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 3px 12px;
+      border: 1px solid rgba(183, 28, 28, 0.2);
+      border-radius: 20px;
+      background: rgba(183, 28, 28, 0.05);
+    }
+    .kc-bg-effect {
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(183, 28, 28, 0.025) 0%, transparent 25%),
+        radial-gradient(circle at 90% 85%, rgba(212, 175, 55, 0.025) 0%, transparent 25%),
+        radial-gradient(circle at 50% 5%, rgba(255, 171, 145, 0.02) 0%, transparent 30%);
+      background-attachment: fixed;
+    }
+`;
       document.head.appendChild(styleTag);
     }
 
@@ -840,7 +978,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       document.body.classList.add('holi-bg-effect');
       document.body.classList.remove('diwali-bg-effect');
+      document.body.classList.remove('kc-bg-effect');
       document.body.classList.remove('rakhi-bg-effect');
+      document.body.classList.remove('kc-bg-effect');
+      document.body.classList.remove('kc-bg-effect');
 
     } else if (isDiwaliToday) {
       festiveNote = 'diwali';
@@ -857,6 +998,46 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       document.body.classList.add('diwali-bg-effect');
       document.body.classList.remove('holi-bg-effect');
+      document.body.classList.remove('rakhi-bg-effect');
+
+      if (opensSoon) {
+        statusMessage = 'Opens soon';
+        timeInfoMessage = `Opens at ${formatTime(todayHours.open)}.`;
+        statusClass = 'soon';
+        statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (closesSoon) {
+        statusMessage = 'Closes soon';
+        timeInfoMessage = `Closes at ${formatTime(todayHours.close)}.`;
+        statusClass = 'soon';
+        statusIcon = '<div class="static-circle yellow beeping"></div>';
+      } else if (currentHour >= todayHours.open && currentHour < todayHours.close) {
+        statusMessage = 'Open now';
+        timeInfoMessage = `Open until ${formatTime(todayHours.close)}.`;
+        statusClass = 'open';
+        statusIcon = '<div class="static-circle green beeping"></div>';
+      } else {
+        statusMessage = 'Closed now';
+        timeInfoMessage = getNextOpenText();
+        statusClass = 'closed';
+        statusIcon = '<div class="static-circle red"></div>';
+      }
+
+    } else if (isKarwachauthToday) {
+      festiveNote = 'karwachauth';
+
+      if (festiveNoteElement) {
+        festiveNoteElement.style.background = 'none';
+        festiveNoteElement.style.backgroundSize = '';
+        festiveNoteElement.style.boxShadow = 'none';
+        festiveNoteElement.style.border = 'none';
+        festiveNoteElement.style.animation = 'none';
+        festiveNoteElement.style.padding = '0';
+        festiveNoteElement.style.color = '';
+        festiveNoteElement.style.textShadow = '';
+      }
+      document.body.classList.add('kc-bg-effect');
+      document.body.classList.remove('holi-bg-effect');
+      document.body.classList.remove('diwali-bg-effect');
       document.body.classList.remove('rakhi-bg-effect');
 
       if (opensSoon) {
@@ -924,6 +1105,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.classList.remove('holi-bg-effect');
       document.body.classList.remove('diwali-bg-effect');
       document.body.classList.remove('rakhi-bg-effect');
+      document.body.classList.remove('kc-bg-effect');
 
       if (festiveNoteElement) {
         festiveNoteElement.style.background = 'linear-gradient(90deg, #ffda8a, #ffd35c, #ffda8a)';
@@ -1011,10 +1193,16 @@ document.addEventListener("DOMContentLoaded", function () {
       holiOverlay.style.display = 'block';
       homeItemElement.classList.add('holi-note');
       homeItemElement.classList.remove('diwali-note');
+      homeItemElement.classList.remove('rakhi-note');
+      homeItemElement.classList.remove('kc-note');
 
       // Hide diwali overlay if present
       const diwaliOverlay = document.getElementById('diwali-overlay');
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+      const rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (rakhiOverlay) rakhiOverlay.style.display = 'none';
+      const kcOverlay = document.getElementById('kc-overlay');
+      if (kcOverlay) kcOverlay.style.display = 'none';
 
     } else if (isDiwaliToday && homeItemElement) {
       // Diwali card — integrate status into overlay
@@ -1091,12 +1279,203 @@ document.addEventListener("DOMContentLoaded", function () {
       diwaliOverlay.style.display = 'block';
       homeItemElement.classList.add('diwali-note');
       homeItemElement.classList.remove('holi-note');
+      homeItemElement.classList.remove('rakhi-note');
+      homeItemElement.classList.remove('kc-note');
 
       // Hide holi overlay if present
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
 
       // Hide rakhi overlay if present
+      const rakhiOverlay = document.getElementById('rakhi-overlay');
+      if (rakhiOverlay) rakhiOverlay.style.display = 'none';
+      const kcOverlay = document.getElementById('kc-overlay');
+      if (kcOverlay) kcOverlay.style.display = 'none';
+
+    } else if (isKarwachauthToday && homeItemElement) {
+      // Karwa Chauth card
+      if (statusElement) statusElement.style.display = 'none';
+      if (timeInfoElement) timeInfoElement.style.display = 'none';
+      if (festiveNoteElement) festiveNoteElement.style.display = 'none';
+
+      let kcOverlay = document.getElementById('kc-overlay');
+      if (!kcOverlay) {
+        kcOverlay = document.createElement('div');
+        kcOverlay.id = 'kc-overlay';
+        homeItemElement.insertBefore(kcOverlay, businessHoursBox);
+      }
+
+      const kcStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+
+      kcOverlay.innerHTML = `
+        <div class="kc-thread-left"></div>
+        <div class="kc-thread-right"></div>
+        <div class="kc-bead b1"></div>
+        <div class="kc-bead b2"></div>
+        <div class="kc-bead b3"></div>
+        <div class="kc-bead b4"></div>
+        <div class="kc-bead b5"></div>
+        <div class="kc-bead b6"></div>
+        <div class="kc-title-row">
+          <div class="mini-kc">
+            <svg viewBox="0 0 44 34" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Clean Smooth Full Moon Gradient (NO CRATERS) -->
+              <radialGradient id="kcFullMoonG" cx="45%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="30%" stop-color="#fffde7"/>
+                <stop offset="65%" stop-color="#fff59d"/>
+                <stop offset="88%" stop-color="#fdd835"/>
+                <stop offset="100%" stop-color="#f57f17"/>
+              </radialGradient>
+              <filter id="kcMoonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="1.2" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <!-- Authentic Diwali Diya Gradients -->
+              <radialGradient id="kcFlameG" cx="50%" cy="65%" r="50%">
+                <stop offset="0%" stop-color="#fff8c4"/>
+                <stop offset="20%" stop-color="#ffe44d"/>
+                <stop offset="45%" stop-color="#ffb300"/>
+                <stop offset="70%" stop-color="#ff8f00"/>
+                <stop offset="90%" stop-color="#e65100"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+              <linearGradient id="kcBowlG" x1="0" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="#eba84c"/>
+                <stop offset="35%" stop-color="#c87828"/>
+                <stop offset="70%" stop-color="#a05818"/>
+                <stop offset="100%" stop-color="#7a3e10"/>
+              </linearGradient>
+              <linearGradient id="kcRimG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#b08030"/>
+                <stop offset="30%" stop-color="#eac060"/>
+                <stop offset="50%" stop-color="#f5d870"/>
+                <stop offset="70%" stop-color="#eac060"/>
+                <stop offset="100%" stop-color="#b08030"/>
+              </linearGradient>
+              <linearGradient id="kcBaseG" x1="0" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="#a06828"/>
+                <stop offset="100%" stop-color="#5c3410"/>
+              </linearGradient>
+              <filter id="kcFlameGlow">
+                <feGaussianBlur stdDeviation="1.2" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- 1. FULL MOON (Centered at top, smooth glowing disc: diameter = 23) -->
+            <g filter="url(#kcMoonGlow)">
+              <circle cx="22" cy="12" r="12.2" fill="none" stroke="#fff9c4" stroke-width="0.7" opacity="0.45"/>
+              <circle cx="22" cy="12" r="11.5" fill="url(#kcFullMoonG)"/>
+            </g>
+
+            <!-- 2. CHANNI (Increased size: diameter = 17, shifted to BOTTOM CENTER of the Moon) -->
+            <g id="channiGroup">
+              <!-- Sieve wire mesh (criss-cross grid) -->
+              <g stroke="#d4af37" stroke-width="0.32" opacity="0.65">
+                <line x1="16.5" y1="15" x2="16.5" y2="25"/>
+                <line x1="18.5" y1="13.5" x2="18.5" y2="26.5"/>
+                <line x1="20.5" y1="12.2" x2="20.5" y2="27.8"/>
+                <line x1="22" y1="11.8" x2="22" y2="28.2"/>
+                <line x1="23.5" y1="12.2" x2="23.5" y2="27.8"/>
+                <line x1="25.5" y1="13.5" x2="25.5" y2="26.5"/>
+                <line x1="27.5" y1="15" x2="27.5" y2="25"/>
+                
+                <line x1="15.5" y1="15" x2="28.5" y2="15"/>
+                <line x1="14" y1="17.5" x2="30" y2="17.5"/>
+                <line x1="13.6" y1="20" x2="30.4" y2="20"/>
+                <line x1="14" y1="22.5" x2="30" y2="22.5"/>
+                <line x1="15.5" y1="25" x2="28.5" y2="25"/>
+              </g>
+
+              <!-- Outer Hoop / Rim (Crimson & Gold traditional gotta lace) -->
+              <circle cx="22" cy="20" r="8.5" fill="none" stroke="#b71c1c" stroke-width="1.2"/>
+              <circle cx="22" cy="20" r="7.7" fill="none" stroke="#d4af37" stroke-width="0.7" stroke-dasharray="1.5 1"/>
+              <circle cx="22" cy="20" r="9.1" fill="none" stroke="#eac060" stroke-width="0.4" opacity="0.6"/>
+
+              <!-- Decorative Gotta Pearls around hoop -->
+              <circle cx="13.5" cy="20" r="0.5" fill="#ffd54f"/>
+              <circle cx="14.8" cy="15.5" r="0.45" fill="#ffd54f"/>
+              <circle cx="17.8" cy="12.5" r="0.5" fill="#ffd54f"/>
+              <circle cx="22" cy="11.5" r="0.55" fill="#b71c1c"/>
+              <circle cx="26.2" cy="12.5" r="0.5" fill="#ffd54f"/>
+              <circle cx="29.2" cy="15.5" r="0.45" fill="#ffd54f"/>
+              <circle cx="30.5" cy="20" r="0.5" fill="#ffd54f"/>
+              <circle cx="29.2" cy="24.5" r="0.45" fill="#ffd54f"/>
+              <circle cx="26.2" cy="27.5" r="0.5" fill="#ffd54f"/>
+              <circle cx="22" cy="28.5" r="0.55" fill="#b71c1c"/>
+              <circle cx="17.8" cy="27.5" r="0.5" fill="#ffd54f"/>
+              <circle cx="14.8" cy="24.5" r="0.45" fill="#ffd54f"/>
+
+              <!-- Small hanging latkan bead at bottom center -->
+              <path d="M22 28.5 L22 31.2" stroke="#b71c1c" stroke-width="0.8" stroke-linecap="round"/>
+              <circle cx="22" cy="32" r="0.8" fill="#d4af37"/>
+            </g>
+
+            <!-- 3. Authentic Diwali DIYA (Slightly larger with channi, inside bottom of channi) -->
+            <g transform="translate(17.8, 18.8) scale(0.32)">
+              <!-- Ground shadow -->
+              <ellipse cx="13" cy="22.5" rx="11" ry="1.5" fill="rgba(60,30,5,0.22)"/>
+              <!-- Base foot -->
+              <path d="M6 21 Q6 22.5, 10 22.5 L16 22.5 Q20 22.5, 20 21 Z" fill="url(#kcBaseG)" stroke="#6b3a10" stroke-width="0.4"/>
+              <!-- Base ridge -->
+              <line x1="9" y1="21.3" x2="17" y2="21.3" stroke="#dab060" stroke-width="0.6" opacity="0.7"/>
+              <!-- Bowl -->
+              <path d="M3 21 Q1 19, 1 17 Q1 15, 4 14 L22 14 Q24 14.5, 25 16 Q26 14, 28 13.5 Q29 13.5, 28.5 14.5 Q27 16, 25 17 Q24 19, 23 21 Z" fill="url(#kcBowlG)" stroke="#8b5520" stroke-width="0.4"/>
+              <!-- Bowl inner shadow -->
+              <path d="M5 20 Q4 18, 5 16 L21 16 Q22 18, 21 20 Z" fill="rgba(0,0,0,0.12)"/>
+              <!-- Oil shimmer -->
+              <ellipse cx="13" cy="18" rx="6" ry="2" fill="rgba(255,190,60,0.25)"/>
+              <!-- Rim -->
+              <path d="M1 17 Q0.5 15, 2 14 Q4 13, 6 14 L22 14 Q24 13, 25 14 Q26 14, 28 13.5" fill="none" stroke="url(#kcRimG)" stroke-width="1.2" stroke-linecap="round"/>
+              <!-- Scallops -->
+              <circle cx="5" cy="14.2" r="0.6" fill="#f0cc70"/>
+              <circle cx="8" cy="13.8" r="0.6" fill="#f0cc70"/>
+              <circle cx="11" cy="13.6" r="0.6" fill="#f0cc70"/>
+              <circle cx="14" cy="13.6" r="0.6" fill="#f0cc70"/>
+              <circle cx="17" cy="13.8" r="0.6" fill="#f0cc70"/>
+              <circle cx="20" cy="14" r="0.6" fill="#f0cc70"/>
+              <!-- Golden band -->
+              <path d="M5 18.5 Q10 18, 13 18.5 Q17 18.5, 21 18.5" fill="none" stroke="#e8c050" stroke-width="0.5" opacity="0.6"/>
+              <!-- Kumkum dot -->
+              <circle cx="13" cy="17.2" r="0.9" fill="#dd2200"/>
+              <circle cx="9" cy="16.5" r="0.6" fill="#e8c040"/>
+              <circle cx="17" cy="16.5" r="0.6" fill="#e8c040"/>
+              <!-- Wick -->
+              <line x1="27" y1="13.5" x2="29" y2="11" stroke="#3a2a1a" stroke-width="0.6" stroke-linecap="round"/>
+              <!-- Flame with glow and flicker -->
+              <g class="diya-flame-g" filter="url(#kcFlameGlow)">
+                <ellipse cx="29" cy="7" rx="3.2" ry="5.5" fill="url(#kcFlameG)"/>
+              </g>
+            </g>
+          </svg>
+          </div>
+          <div class="kc-title">Happy Karwa Chauth!</div>
+        </div>
+        <div class="kc-subtitle">We're operating on <strong>modified hours</strong> today.</div>
+        <div class="kc-timing">Karwa Chauth Hours: ${formatTime(karwachauthHours.open)} – ${formatTime(karwachauthHours.close)}</div>
+        <div style="position:relative; font-size:0.95rem; color:${kcStatusColor}; font-weight:600; margin-top:12px; margin-bottom:7px;">
+           ${statusMessage} ${statusIcon} <span style="color:#888; font-weight:500;font-size:0.91rem;">${timeInfoMessage}</span>
+        </div>
+      `;
+      kcOverlay.style.display = 'block';
+      homeItemElement.classList.add('kc-note');
+      homeItemElement.classList.remove('holi-note');
+      homeItemElement.classList.remove('diwali-note');
+      homeItemElement.classList.remove('rakhi-note');
+
+      // Hide other overlays
+      const holiOverlay = document.getElementById('holi-overlay');
+      if (holiOverlay) holiOverlay.style.display = 'none';
+      const diwaliOverlay = document.getElementById('diwali-overlay');
+      if (diwaliOverlay) diwaliOverlay.style.display = 'none';
       const rakhiOverlay = document.getElementById('rakhi-overlay');
       if (rakhiOverlay) rakhiOverlay.style.display = 'none';
 
@@ -1186,12 +1565,15 @@ document.addEventListener("DOMContentLoaded", function () {
       homeItemElement.classList.add('rakhi-note');
       homeItemElement.classList.remove('holi-note');
       homeItemElement.classList.remove('diwali-note');
+      homeItemElement.classList.remove('kc-note');
 
       // Hide other overlays
       const holiOverlay = document.getElementById('holi-overlay');
       if (holiOverlay) holiOverlay.style.display = 'none';
       const diwaliOverlay = document.getElementById('diwali-overlay');
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
+      const kcOverlay = document.getElementById('kc-overlay');
+      if (kcOverlay) kcOverlay.style.display = 'none';
 
     } else if (isInfoDayToday && homeItemElement) {
       // Info day card — informational overlay with normal business status
@@ -1221,6 +1603,7 @@ document.addEventListener("DOMContentLoaded", function () {
       homeItemElement.classList.remove('holi-note');
       homeItemElement.classList.remove('diwali-note');
       homeItemElement.classList.remove('rakhi-note');
+      homeItemElement.classList.remove('kc-note');
 
       // Hide other overlays
       const holiOverlay = document.getElementById('holi-overlay');
@@ -1229,6 +1612,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (diwaliOverlay) diwaliOverlay.style.display = 'none';
       const rakhiOverlay = document.getElementById('rakhi-overlay');
       if (rakhiOverlay) rakhiOverlay.style.display = 'none';
+      const kcOverlay2 = document.getElementById('kc-overlay');
+      if (kcOverlay2) kcOverlay2.style.display = 'none';
 
     } else {
       // Normal day — restore everything
@@ -1240,11 +1625,14 @@ document.addEventListener("DOMContentLoaded", function () {
       if (infoOverlay) infoOverlay.style.display = 'none';
       const rakhiOverlay = document.getElementById('rakhi-overlay');
       if (rakhiOverlay) rakhiOverlay.style.display = 'none';
+      const kcOverlay = document.getElementById('kc-overlay');
+      if (kcOverlay) kcOverlay.style.display = 'none';
       if (homeItemElement) {
         homeItemElement.classList.remove('holi-note');
         homeItemElement.classList.remove('diwali-note');
         homeItemElement.classList.remove('info-day-note');
         homeItemElement.classList.remove('rakhi-note');
+        homeItemElement.classList.remove('kc-note');
       }
 
       if (festiveNoteElement) {
@@ -1283,6 +1671,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (homeItemElement) {
       if (isDiwaliToday) {
         homeItemElement.style.borderColor = '#ffb300';
+      } else if (isKarwachauthToday) {
+        homeItemElement.style.borderColor = '#b71c1c';
       } else if (isRakhiToday) {
         homeItemElement.style.borderColor = '#e65100';
       } else if (isInfoDayToday) {
@@ -1497,4 +1887,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-}); //Update
+});
