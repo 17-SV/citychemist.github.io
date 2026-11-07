@@ -300,12 +300,12 @@
         };
         const baseHour = 9;
         const days = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
-        const diwaliDate = "11-08";   // MM-DD for Diwali
+        const diwaliDate = "2026-11-08";   // YYYY-MM-DD for Diwali
         const holiDate = "03-04";     // MM-DD for Holi
-        const rakhiDate = "08-28";    // MM-DD for Raksha Bandhan
+        const rakhiDate = "2026-08-28";    // YYYY-MM-DD for Raksha Bandhan
         const diwaliHours = { open: 9, close: 18 };
         const rakhiHours = { open: 9, close: 15 };
-        const karwachauthDate = "10-29";  // MM-DD for Karwa Chauth
+        const karwachauthDate = "2026-10-29";  // YYYY-MM-DD for Karwa Chauth
         const karwachauthHours = { open: 9, close: 20 };
         // ---------- DOM ----------
         const chartEl = document.querySelector(".chart");
@@ -354,39 +354,47 @@
         function isTextOverflowing(el) {
           return el.scrollWidth > el.clientWidth;
         }
+        function isDateMatch(target) {
+          const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+          const yyyy = now.getFullYear();
+          const mm = String(now.getMonth() + 1).padStart(2, '0');
+          const dd = String(now.getDate()).padStart(2, '0');
+          if (target.length === 10) {
+            return `${yyyy}-${mm}-${dd}` === target;
+          }
+          return `${mm}-${dd}` === target;
+        }
+
         function isDiwali() {
-          const now = new Date();
-          const current = now.toISOString().slice(5, 10);
-          return current === diwaliDate;
+          return isDateMatch(diwaliDate);
         }
         function isHoli() {
-          const now = new Date();
-          const current = now.toISOString().slice(5, 10);
-          return current === holiDate;
-        }
-        function isDiwaliOpen() {
-          const now = new Date();
-          return isDiwali() && now.getHours() >= diwaliHours.open && now.getHours() < diwaliHours.close;
+          return isDateMatch(holiDate);
         }
         function isRakhi() {
-          const now = new Date();
-          const mm = String(now.getMonth() + 1).padStart(2, '0');
-          const dd = String(now.getDate()).padStart(2, '0');
-          return `${mm}-${dd}` === rakhiDate;
-        }
-        function isRakhiOpen() {
-          const now = new Date();
-          return isRakhi() && now.getHours() >= rakhiHours.open && now.getHours() < rakhiHours.close;
+          return isDateMatch(rakhiDate);
         }
         function isKarwachauth() {
-          const now = new Date();
-          const mm = String(now.getMonth() + 1).padStart(2, '0');
-          const dd = String(now.getDate()).padStart(2, '0');
-          return `${mm}-${dd}` === karwachauthDate;
+          return isDateMatch(karwachauthDate);
+        }
+        function getEffectiveCloseHour(festiveHours) {
+          const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+          return now.getDay() === 0 ? 14 : festiveHours.close;
+        }
+        function isDiwaliOpen() {
+          const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+          const close = getEffectiveCloseHour(diwaliHours);
+          return isDiwali() && now.getHours() >= diwaliHours.open && now.getHours() < close;
+        }
+        function isRakhiOpen() {
+          const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+          const close = getEffectiveCloseHour(rakhiHours);
+          return isRakhi() && now.getHours() >= rakhiHours.open && now.getHours() < close;
         }
         function isKarwachauthOpen() {
-          const now = new Date();
-          return isKarwachauth() && now.getHours() >= karwachauthHours.open && now.getHours() < karwachauthHours.close;
+          const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+          const close = getEffectiveCloseHour(karwachauthHours);
+          return isKarwachauth() && now.getHours() >= karwachauthHours.open && now.getHours() < close;
         }
         // ---------- SHOW INFO ----------
         function showBarInfo(bar, hour, value, precise = false) {
@@ -397,19 +405,19 @@
           }
 
           // Diwali after closing hour: hide info
-          if (isDiwali() && hour >= diwaliHours.close) {
+          if (isDiwali() && hour >= getEffectiveCloseHour(diwaliHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
           }
           // Raksha Bandhan after closing hour: hide info
-          if (isRakhi() && hour >= rakhiHours.close) {
+          if (isRakhi() && hour >= getEffectiveCloseHour(rakhiHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
           }
           // Karwa Chauth after closing hour: hide info
-          if (isKarwachauth() && hour >= karwachauthHours.close) {
+          if (isKarwachauth() && hour >= getEffectiveCloseHour(karwachauthHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
@@ -467,11 +475,11 @@
             if (isToday) {
               if (isHoli()) {
                 val = 0;
-              } else if (isDiwali() && hour >= diwaliHours.close) {
+              } else if (isDiwali() && hour >= getEffectiveCloseHour(diwaliHours)) {
                 val = 0;
-              } else if (isRakhi() && hour >= rakhiHours.close) {
+              } else if (isRakhi() && hour >= getEffectiveCloseHour(rakhiHours)) {
                 val = 0;
-              } else if (isKarwachauth() && hour >= karwachauthHours.close) {
+              } else if (isKarwachauth() && hour >= getEffectiveCloseHour(karwachauthHours)) {
                 val = 0;
               }
             }
@@ -512,19 +520,19 @@
           }
 
           // Diwali: hide info after 6 PM
-          if (isDiwali() && currentHour >= diwaliHours.close) {
+          if (isDiwali() && currentHour >= getEffectiveCloseHour(diwaliHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
           }
           // Raksha Bandhan: hide info after 3 PM
-          if (isRakhi() && currentHour >= rakhiHours.close) {
+          if (isRakhi() && currentHour >= getEffectiveCloseHour(rakhiHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
           }
           // Karwa Chauth: hide info after 8 PM
-          if (isKarwachauth() && currentHour >= karwachauthHours.close) {
+          if (isKarwachauth() && currentHour >= getEffectiveCloseHour(karwachauthHours)) {
             barInfo.style.opacity = 0;
             lineIndicator.style.display = "none";
             return;
