@@ -94,15 +94,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const sundayHours = { open: 9, close: 14 };
 
   // 🪔 Special Diwali timing (Set MM-DD correctly)
-  const diwaliDate = '11-08'; //Diwali 
+  const diwaliDate = '2026-11-08'; // YYYY-MM-DD for Diwali //Diwali 
   const diwaliHours = { open: 9, close: 18 };
 
   // 🪢 Raksha Bandhan half-day timing
-  const rakhiDate = '08-28';
+  const rakhiDate = '2026-08-28'; // YYYY-MM-DD for Raksha Bandhan
   const rakhiHours = { open: 9, close: 15 }; // closes at 3 PM
 
-  // ðŸŒ™ Karwa Chauth timing
-  const karwachauthDate = '10-29';
+  // Karwa Chauth timing
+  const karwachauthDate = '2026-10-29'; // YYYY-MM-DD for Karwa Chauth
   const karwachauthHours = { open: 9, close: 20 }; // closes at 8 PM
 
   // 📅 Fixed Holidays (MM-DD)
@@ -134,55 +134,81 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentMinutes = now.getMinutes();
     const currentDay = now.getDay();
 
-    // Helper to get MM-DD string using local date (not UTC via toISOString)
-    function getMMDD(date) {
+    // Helper to get MM-DD and YYYY-MM-DD strings using local date (Asia/Kolkata)
+    function getDateStrings(date) {
+      const yyyy = date.getFullYear();
       const mm = String(date.getMonth() + 1).padStart(2, '0');
       const dd = String(date.getDate()).padStart(2, '0');
-      return `${mm}-${dd}`;
+      return {
+        mmdd: `${mm}-${dd}`,
+        full: `${yyyy}-${mm}-${dd}`
+      };
     }
 
-    const currentDateString = getMMDD(now);
+    function matchesDate(dateObj, targetStr) {
+      if (!targetStr) return false;
+      const { mmdd, full } = getDateStrings(dateObj);
+      if (targetStr.length === 10) {
+        return full === targetStr;
+      }
+      return mmdd === targetStr;
+    }
+
+    const nowDates = getDateStrings(now);
+    const currentDateString = nowDates.mmdd;
+    const currentFullDateString = nowDates.full;
 
     const tomorrow = new Date(now);
     tomorrow.setDate(now.getDate() + 1);
-    const tomorrowDateString = getMMDD(tomorrow);
+    const tomorrowDates = getDateStrings(tomorrow);
+    const tomorrowDateString = tomorrowDates.mmdd;
+    const tomorrowFullDateString = tomorrowDates.full;
 
     // 📋 Info day detection (year-specific)
-    const currentFullDateString = `${now.getFullYear()}-${currentDateString}`;
     const activeInfoDay = specialInfoDays.find(d => d.date === currentFullDateString);
     const isInfoDayToday = !!activeInfoDay;
 
+    function isHoliday(dateObj) {
+      const { mmdd, full } = getDateStrings(dateObj);
+      return holidays.includes(full) || holidays.includes(mmdd);
+    }
+
+    const isHolidayToday = isHoliday(now);
+    const isDiwaliToday = matchesDate(now, diwaliDate);
+    const isRakhiToday = matchesDate(now, rakhiDate);
+    const isKarwachauthToday = matchesDate(now, karwachauthDate);
+    const isHolidayTomorrow = isHoliday(tomorrow);
+
+    const isDiwaliTomorrow = matchesDate(tomorrow, diwaliDate);
+    const isRakhiTomorrow = matchesDate(tomorrow, rakhiDate);
+    const isKarwachauthTomorrow = matchesDate(tomorrow, karwachauthDate);
+
+    // Business Hours Priority: Sunday normal hours take precedence over festival hours
     let todayHours;
-    if (currentDateString === diwaliDate) {
-      todayHours = diwaliHours;
-    } else if (currentDateString === rakhiDate) {
-      todayHours = rakhiHours;
-    } else if (currentDateString === karwachauthDate) {
-      todayHours = karwachauthHours;
-    } else if (currentDay === 0) {
+    if (currentDay === 0) {
       todayHours = sundayHours;
+    } else if (isDiwaliToday) {
+      todayHours = diwaliHours;
+    } else if (isRakhiToday) {
+      todayHours = rakhiHours;
+    } else if (isKarwachauthToday) {
+      todayHours = karwachauthHours;
     } else {
       todayHours = weekdayHours;
     }
 
     let tomorrowHours;
-    if (tomorrowDateString === diwaliDate) {
-      tomorrowHours = diwaliHours;
-    } else if (tomorrowDateString === rakhiDate) {
-      tomorrowHours = rakhiHours;
-    } else if (tomorrowDateString === karwachauthDate) {
-      tomorrowHours = karwachauthHours;
-    } else if (currentDay === 6) {
+    if (currentDay === 6) {
       tomorrowHours = sundayHours;
+    } else if (isDiwaliTomorrow) {
+      tomorrowHours = diwaliHours;
+    } else if (isRakhiTomorrow) {
+      tomorrowHours = rakhiHours;
+    } else if (isKarwachauthTomorrow) {
+      tomorrowHours = karwachauthHours;
     } else {
       tomorrowHours = weekdayHours;
     }
-
-    const isHolidayToday = holidays.includes(currentDateString);
-    const isDiwaliToday = currentDateString === diwaliDate;
-    const isRakhiToday = currentDateString === rakhiDate;
-    const isKarwachauthToday = currentDateString === karwachauthDate;
-    const isHolidayTomorrow = holidays.includes(tomorrowDateString);
 
     // Find next open day (skipping holidays)
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -192,18 +218,17 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 1; i <= 7; i++) {
       const checkDate = new Date(now);
       checkDate.setDate(now.getDate() + i);
-      const checkDateStr = getMMDD(checkDate);
-      if (!holidays.includes(checkDateStr)) {
+      if (!isHoliday(checkDate)) {
         nextOpenDate = checkDate;
         daysAhead = i;
-        if (checkDateStr === diwaliDate) {
-          nextOpenHours = diwaliHours;
-        } else if (checkDateStr === rakhiDate) {
-          nextOpenHours = rakhiHours;
-        } else if (checkDateStr === karwachauthDate) {
-          nextOpenHours = karwachauthHours;
-        } else if (checkDate.getDay() === 0) {
+        if (checkDate.getDay() === 0) {
           nextOpenHours = sundayHours;
+        } else if (matchesDate(checkDate, diwaliDate)) {
+          nextOpenHours = diwaliHours;
+        } else if (matchesDate(checkDate, rakhiDate)) {
+          nextOpenHours = rakhiHours;
+        } else if (matchesDate(checkDate, karwachauthDate)) {
+          nextOpenHours = karwachauthHours;
         } else {
           nextOpenHours = weekdayHours;
         }
@@ -1219,6 +1244,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Status color for the integrated status line
       const diwaliStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+      const isSunday = currentDay === 0;
+      const diwaliTimingHtml = isSunday
+        ? ''
+        : `<div class="diwali-timing">Diwali Hours: ${formatTime(todayHours.open)} – ${formatTime(todayHours.close)}</div>`;
 
       diwaliOverlay.innerHTML = `
         <div class="diwali-wire-left"></div>
@@ -1270,8 +1299,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </svg></div>
           <div class="diwali-title">Happy Diwali!</div>
         </div>
-        
-        <div class="diwali-timing">Diwali Hours: ${formatTime(diwaliHours.open)} – ${formatTime(diwaliHours.close)}</div>
+        ${diwaliTimingHtml}
         <div style="position:relative; font-size:0.95rem; color:${diwaliStatusColor}; font-weight:600; margin-top:12px; margin-bottom:7px;">
            ${statusMessage} ${statusIcon} <span style="color:#888; font-weight:500;font-size:0.91rem;">${timeInfoMessage}</span>
         </div>
@@ -1306,6 +1334,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const kcStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+      const isSunday = currentDay === 0;
+      const kcSubtitleHtml = isSunday
+        ? ''
+        : `<div class="kc-subtitle">We're operating on <strong>modified hours</strong> today.</div>`;
+      const kcTimingHtml = isSunday
+        ? ''
+        : `<div class="kc-timing">Karwa Chauth Hours: ${formatTime(todayHours.open)} – ${formatTime(todayHours.close)}</div>`;
 
       kcOverlay.innerHTML = `
         <div class="kc-thread-left"></div>
@@ -1459,8 +1494,8 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
           <div class="kc-title">Happy Karwa Chauth!</div>
         </div>
-        <div class="kc-subtitle">We're operating on <strong>modified hours</strong> today.</div>
-        <div class="kc-timing">Karwa Chauth Hours: ${formatTime(karwachauthHours.open)} – ${formatTime(karwachauthHours.close)}</div>
+        ${kcSubtitleHtml}
+        ${kcTimingHtml}
         <div style="position:relative; font-size:0.95rem; color:${kcStatusColor}; font-weight:600; margin-top:12px; margin-bottom:7px;">
            ${statusMessage} ${statusIcon} <span style="color:#888; font-weight:500;font-size:0.91rem;">${timeInfoMessage}</span>
         </div>
@@ -1493,6 +1528,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const rakhiStatusColor = statusClass === 'open' ? '#1db280' : statusClass === 'soon' ? '#e6a000' : '#cc3333';
+      const isSunday = currentDay === 0;
+      const rakhiSubtitleHtml = isSunday
+        ? ''
+        : `<div class="rakhi-subtitle">We're operating on <strong>reduced hours</strong> today.</div>`;
+      const rakhiTimingHtml = isSunday
+        ? ''
+        : `<div class="rakhi-timing">Raksha Bandhan Hours: ${formatTime(todayHours.open)} – ${formatTime(todayHours.close)}</div>`;
 
       rakhiOverlay.innerHTML = `
         <div class="rakhi-thread-left"></div>
@@ -1555,8 +1597,8 @@ document.addEventListener("DOMContentLoaded", function () {
           </svg>
         </div>
         <div class="rakhi-title">Happy Raksha Bandhan!</div>
-        <div class="rakhi-subtitle">We're operating on <strong>reduced hours</strong> today.</div>
-        <div class="rakhi-timing">Raksha Bandhan Hours: ${formatTime(rakhiHours.open)} – ${formatTime(rakhiHours.close)}</div>
+        ${rakhiSubtitleHtml}
+        ${rakhiTimingHtml}
         <div style="position:relative; font-size:0.95rem; color:${rakhiStatusColor}; font-weight:600; margin-top:12px; margin-bottom:7px;">
            ${statusMessage} ${statusIcon} <span style="color:#888; font-weight:500;font-size:0.91rem;">${timeInfoMessage}</span>
         </div>
